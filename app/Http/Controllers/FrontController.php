@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Product;
 
 class FrontController extends Controller
 {
@@ -15,12 +16,24 @@ class FrontController extends Controller
     {
         return view('pages.home');
     }
+
     public function shop()
     {
-        return view('pages.shop');
+        $products = Product::all();
+
+        return view('pages.shop')->with('products', $products);
     }
+
     public function cart()
     {
         return view('pages.cart');
     }
+    
+    public function addToCart($id)
+    {
+        $products = Product::all();
+
+        return view('pages.shop')->with('products', $products);
+    }
+
 }

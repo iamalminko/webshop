@@ -18,6 +18,7 @@ Route::get('/shop', 'App\Http\Controllers\FrontController@shop');
 Route::get('/cart', 'App\Http\Controllers\FrontController@cart');
 
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index');
+Route::post('/setDiscount/{id}', 'App\Http\Controllers\DashboardController@setDiscount')->name('setDiscount');
 
 Auth::routes();
 

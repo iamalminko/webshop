@@ -17,10 +17,13 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+
     protected $fillable = [
         'name',
         'email',
         'password',
+        'level',
+        'cart',
     ];
 
     /**
@@ -41,4 +44,24 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * the salesman user contain a role_id of 1
+     * 
+     * @return boolean [description]
+     */
+    public function isSalesman()
+    {
+        return $this->attributes['level'] == '1';
+    }
+
+    /**
+     * the customer user contain a role_id of 0
+     * 
+     * @return boolean [description]
+     */
+    public function isCustomer()
+    {
+        return $this->attributes['level'] == '0';
+    }
 }

@@ -2057,6 +2057,17 @@ li.menu-item .nav-label.sale-label::before{
     padding: 0 15px;
     height: 45px;
 }
+.wrap-newletter-footer input[type="number"]{
+    display: inline-block;
+    width: 100%;
+    font-size: 13px;
+    line-height: 13px;
+    color: #888888;
+    border: 1px solid #e6e6e6;
+    /*padding: 12.5px 15px;*/
+    padding: 0 15px;
+    height: 45px;
+}
 .wrap-newletter-footer .btn-submit{
     display: inline-block;
     font-size: 14px;

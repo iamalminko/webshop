@@ -40,7 +40,7 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
-Run migrations for the DB:
+Run the migrations for the DB:
 ```bash
 php artisan migrate
 ```

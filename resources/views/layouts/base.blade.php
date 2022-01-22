@@ -5,7 +5,7 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<title>Home</title>	
-    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.gif">
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,700,700italic,900,900italic&amp;subset=latin,latin-ext" rel="stylesheet">
 	<link href="https://fonts.googleapis.com/css?family=Open%20Sans:300,400,400italic,600,600italic,700,700italic&amp;subset=latin,latin-ext" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="{{ asset("assets/css/animate.css") }}">
@@ -41,12 +41,34 @@
 						</div>
 						<div class="topbar-menu right-menu">
 							<ul>
-                                @if(Auth::guest() and Auth::user()->id == $post->user_id)
+                                @guest                                    
                                     <li class="menu-item" ><a title="Register or Login" href="/login">Login</a></li>
                                     <li class="menu-item" ><a title="Register or Login" href="/register">Register</a></li>
                                 @else
-                                    <li class="menu-item" ><a title="Register or Login" href="/dashboard">{{ Auth::user()->name }}</a></li>            
-                                @endif
+                                    <li class="menu-item menu-item-has-children parent" >
+                                        <a title="Account" href="#">{{ Auth::user()->name }}<i class="fa fa-angle-down" aria-hidden="true"></i></a>
+                                        <ul class="submenu" >
+                                            @if (Auth::user()->level == 1)
+                                            <li class="menu-item" >
+                                                <a class="dropdown-item" href="/dashboard">
+                                                    Dashboard
+                                                </a>
+                                            </li>
+                                            @endif
+                                            <li class="menu-item" >
+                                                <a class="dropdown-item" href="{{ route('logout') }}"
+                                                onclick="event.preventDefault();
+                                                                document.getElementById('logout-form').submit();">
+                                                    {{ __('Logout') }}
+                                                </a>
+
+                                                <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                                    @csrf
+                                                </form>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                @endguest
 								<li class="menu-item lang-menu menu-item-has-children parent">
 									<a title="English" href="#"><span class="img label-before"><img src="{{ asset("assets/images/lang-en.png") }}" alt="lang-en"></span>English<i class="fa fa-angle-down" aria-hidden="true"></i></a>
 									<ul class="submenu lang" >
