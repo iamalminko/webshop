@@ -33,7 +33,7 @@ class FrontController extends Controller
         $cart_json = json_decode($cart);
 
         $cart_union = [];
-        foreach($cart_json->products as $product)
+        foreach($cart_json as $product)
         {
             $info = Product::where('id' , '=' , $product->product_id)->get()[0];
             array_push($cart_union, [
@@ -54,23 +54,63 @@ class FrontController extends Controller
         $user = User::where('id' , '=' , $userID )->get()[0];
         $cart = $user->cart;
 
-        $user->cart = self::addItemToCart($cart, $id, 1);
-        $user->save();
-
-        
-        return redirect('/shop');
-    }
-
-    private function addItemToCart($cart, $item, $amount)
-    {
         $cart_json = json_decode($cart);
-
         foreach ($cart_json->products as $product) {
             if($product->product_id == $item) return $cart;
         }
-        array_push($cart_json->products, ["product_id" => $item, "amount" => $amount]);
+        array_push($cart_json->products, ["product_id" => $item, "amount" => 1]);
 
-        return json_encode($cart_json);
+        $user->cart = json_encode($cart_json);
+        $user->save();
+        
+        return redirect('/shop');
+    }
+    
+    public function changeAmount($id, $amount)
+    {
+        $userID = auth()->user()->id;
+        $user = User::where('id' , '=' , $userID )->get()[0];
+        $cart = $user->cart;
+
+        $cart_json = json_decode($cart);
+        $cart_new = [];
+
+        foreach ($cart_json as $product) {
+            if($product->product_id == $id) array_push($cart_new, ["product_id" => $id, "amount" => $amount]);
+            else array_push($cart_new, $product);
+        }
+
+        $user->cart = json_encode($cart_new);
+        $user->save();
+        
+        return 'SUCCESS';
+    }
+    
+    public function removeFromCart($id)
+    {
+        $userID = auth()->user()->id;
+        $user = User::where('id' , '=' , $userID )->get()[0];
+        $cart = $user->cart;
+
+        $cart_json = json_decode($cart);
+        $cart_new = [];
+
+        foreach ($cart_json as $product) {
+            if($product->product_id == $id)
+            {} 
+            else array_push($cart_new, ["product_id" => $product->product_id, "amount" => $product->amount]);
+        }
+
+        $user->cart = json_encode($cart_new);
+        $user->save();
+        
+        return 'SUCCESS';
+    }
+
+    private function addItemToCart($cart, $item)
+    {
+
+        return ;
     }
 
 }

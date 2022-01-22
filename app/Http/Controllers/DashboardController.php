@@ -36,12 +36,16 @@ class DashboardController extends Controller
      */
     public function setDiscount(Request $request, $id)
     {
-        $products = Product::all();
+        $user = User::where(auth::user->id , '=' , $userID )->get()[0];
+        if($user->level == 1)
+        {
+            $products = Product::all();
 
-        $product = Product::where('id' , '=' , $id )->get()[0];
-        $product->discount = $request->input('discount');
-        $product->save();
-
+            $product = Product::where('id' , '=' , $id )->get()[0];
+            $product->discount = $request->input('discount');
+            $product->save();
+        }
+    
         return redirect('/dashboard');
     }
 }

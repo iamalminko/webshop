@@ -29,9 +29,9 @@
                             <div class="price-field produtc-price"><p class="price">€{{number_format($product['price'], 2)}}</p></div>
                             <div class="quantity">
                                 <div class="quantity-input">
-                                    <input type="text" name="product-quatity" value="{{$product['amount']}}" data-max="120" pattern="[0-9]*" >									
+                                    <input type="text" name="product-quatity" value="{{$product['amount']}}" data-max="120" pattern="[0-9]*" >
                                     <a class="btn btn-increase" href="#"></a>
-                                    <a class="btn btn-reduce" href="#"></a>
+									<a class="btn btn-reduce" href="#"></a>
                                 </div>
                             </div>
                             <div class="price-field sub-total"><p class="price">€{{number_format(($product['price']*$product['amount']), 2)}}</p></div>
