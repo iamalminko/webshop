@@ -77,7 +77,7 @@
                                         <div class="wrap-footer-item footer-item-second">
                                             <div class="item-content">
                                                 <div class="wrap-newletter-footer">
-										            <a href="/addToCart" class="btn add-to-cart">Add To Cart</a>
+										            <a href="/addToCart/{{$product->id}}" class="btn add-to-cart">Add To Cart</a>
                                                 </div>
                                             </div>
                                         </div>

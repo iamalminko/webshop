@@ -38,8 +38,6 @@ class DashboardController extends Controller
     {
         $products = Product::all();
 
-        //var_dump($request->input('discount'));
-        //var_dump($id);
         $product = Product::where('id' , '=' , $id )->get()[0];
         $product->discount = $request->input('discount');
         $product->save();
