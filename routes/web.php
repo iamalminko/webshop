@@ -1,9 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Livewire\HomeComponent;
-use App\Http\Livewire\CartComponent;
-use App\Http\Livewire\ShopComponent;
 
 /*
 |--------------------------------------------------------------------------
@@ -16,6 +13,11 @@ use App\Http\Livewire\ShopComponent;
 |
 */
 
-Route::get('/', HomeComponent::class);
-Route::get('/cart', CartComponent::class);
-Route::get('/shop', ShopComponent::class);
+Route::get('/', 'App\Http\Controllers\FrontController@index');
+Route::get('/shop', 'App\Http\Controllers\FrontController@shop');
+Route::get('/cart', 'App\Http\Controllers\FrontController@cart');
+
+Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index');
+
+Auth::routes();
+

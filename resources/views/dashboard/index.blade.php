@@ -1,3 +1,7 @@
+@extends('layouts.base')
+
+@section('content')
+
 <main id="main" class="main-site">
 
     <div class="container">
@@ -236,3 +240,5 @@
     </div><!--end container-->
 
 </main>
+
+@endsection
