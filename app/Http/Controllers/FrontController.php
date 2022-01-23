@@ -30,15 +30,13 @@ class FrontController extends Controller
     public function cart()
     {
         $userID = auth()->user()->id;
-        $user = User::where('id' , '=' , $userID )->get()[0];
-        $cart = $user->cart;
-        $cart_json = json_decode($cart);
-
-        $cart_union = [];
-        foreach($cart_json as $product)
+        $addedProducts = ProductAdded::where('user_id' , '=' , $userID )->get();
+        
+        $addedProducts_union = [];
+        foreach($addedProducts as $product)
         {
             $info = Product::where('id' , '=' , $product->product_id)->get()[0];
-            array_push($cart_union, [
+            array_push($addedProducts_union, [
                 "id" => $info->id,
                 "name" => $info->name,
                 "image" => $info->image,
@@ -46,8 +44,7 @@ class FrontController extends Controller
                 "amount" => $product->amount,
             ]);
         }
-
-        return view('pages.cart')->with('products', $cart_union);
+        return view('pages.cart')->with('products', $addedProducts_union);
     }
     
     public function addToCart($id)
