@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductAdded;
+use App\Models\ProductDropped;
 use App\Models\User;
 
 class FrontController extends Controller
@@ -50,67 +52,86 @@ class FrontController extends Controller
     
     public function addToCart($id)
     {
+        // Check if product already added by this user
         $userID = auth()->user()->id;
-        $user = User::where('id' , '=' , $userID )->get()[0];
-        $cart = $user->cart;
+        $existingRecords = ProductAdded::where('user_id' , '=' , $userID )->where('product_id' , '=' , $id )->get();
 
-        $cart_json = json_decode($cart);
-        foreach ($cart_json->products as $product) {
-            if($product->product_id == $item) return $cart;
+        if(count($existingRecords) == 0)
+        {
+            $productAdded = new ProductAdded();
+            $productAdded->user_id = $userID;
+            $productAdded->product_id = $id;
+            $productAdded->amount = 1;
+            $productAdded->save();
+            return 'SUCCESS';
         }
-        array_push($cart_json->products, ["product_id" => $item, "amount" => 1]);
-
-        $user->cart = json_encode($cart_json);
-        $user->save();
-        
-        return redirect('/shop');
+        else if(count($existingRecords) == 1)
+        {
+            return 'ERROR:PRODUCT ALREADY ADDED';
+        }      
+        else if(count($existingRecords) > 1)
+        {
+            return 'ERROR:DATABASE DUPLICATE';
+        }
     }
     
     public function changeAmount($id, $amount)
     {
         $userID = auth()->user()->id;
-        $user = User::where('id' , '=' , $userID )->get()[0];
-        $cart = $user->cart;
-
-        $cart_json = json_decode($cart);
-        $cart_new = [];
-
-        foreach ($cart_json as $product) {
-            if($product->product_id == $id) array_push($cart_new, ["product_id" => $id, "amount" => $amount]);
-            else array_push($cart_new, $product);
-        }
-
-        $user->cart = json_encode($cart_new);
-        $user->save();
+        $existingRecords = ProductAdded::where('user_id' , '=' , $userID )->where('product_id' , '=' , $id )->get();
         
-        return 'SUCCESS';
+        if(count($existingRecords) == 0)
+        {
+            return 'ERROR:ADDED_PRODUCT NOT FOUND';
+        }
+        else if(count($existingRecords) == 1)
+        {
+            $productAdded = $existingRecords[0];
+            $productAdded->amount = $amount;
+            $productAdded->save();
+            return 'SUCCESS';
+        }      
+        else if(count($existingRecords) > 1)
+        {
+            return 'ERROR:DATABASE DUPLICATE';
+        }
     }
     
     public function removeFromCart($id)
     {
         $userID = auth()->user()->id;
-        $user = User::where('id' , '=' , $userID )->get()[0];
-        $cart = $user->cart;
-
-        $cart_json = json_decode($cart);
-        $cart_new = [];
-
-        foreach ($cart_json as $product) {
-            if($product->product_id == $id)
-            {} 
-            else array_push($cart_new, ["product_id" => $product->product_id, "amount" => $product->amount]);
-        }
-
-        $user->cart = json_encode($cart_new);
-        $user->save();
+        $existingRecords = ProductAdded::where('user_id' , '=' , $userID )->where('product_id' , '=' , $id )->get();
         
-        return 'SUCCESS';
+        if(count($existingRecords) == 0)
+        {
+            return 'ERROR:ADDED_PRODUCT NOT FOUND';
+        }
+        else if(count($existingRecords) == 1)
+        {
+            $droppedProduct = new ProductDropped();
+            $droppedProduct->user_id = $existingRecords[0]->user_id;
+            $droppedProduct->product_id = $existingRecords[0]->product_id;
+            $droppedProduct->amount = $existingRecords[0]->amount;
+            $droppedProduct->price = Product::where('id' , '=' , $existingRecords[0]->product_id)->get()[0]->price;
+            $droppedProduct->save();
+            
+            $existingRecords[0]->delete();
+            return 'SUCCESS';
+        }      
+        else if(count($existingRecords) > 1)
+        {
+            $droppedProduct = new ProductDropped();
+            $droppedProduct->user_id = $existingRecords[0]->user_id;
+            $droppedProduct->product_id = $existingRecords[0]->product_id;
+            $droppedProduct->amount = $existingRecords[0]->amount;
+            $droppedProduct->price = Product::where('id' , '=' , $existingRecords[0]->product_id)->get()[0]->price;
+            $droppedProduct->save();
+
+            foreach ($existingRecords as $record)
+            {
+                $record->delete();
+            }
+            return 'ERROR:DATABASE DUPLICATE (ALL ERRENEOUS RECORDS DELETED)';
+        }
     }
-
-    private function addItemToCart($cart, $item)
-    {
-
-        return ;
-    }
-
 }

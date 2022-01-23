@@ -44,8 +44,9 @@ class DashboardController extends Controller
             $product = Product::where('id' , '=' , $id )->get()[0];
             $product->discount = $request->input('discount');
             $product->save();
+            return 'SUCCESS';
         }
     
-        return redirect('/dashboard');
+        return 'ERROR:ACCESS DENIED';
     }
 }
