@@ -53,11 +53,11 @@ and open the link in your browser, for example:
 
 |        | Page      | Endpoint      | Info                                                                                                                                                                            |   |
 |--------|-----------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|
-| - [x]  | Login     | /login        | After DB import, use alm@fixform.com:12345678 to log in.                                                                                                                        |   |
-| - [x]  | Register  | /register     | Registration by default creates a customer-level-user.  Manually change level in the DB to 1 to be able to set  discounts in the /dashboard.                                    |   |
-| - [x]  | Home      | /             | Number of items in the cart (top right) is dynamic according  to the DB. 'On Sale' section shows first products that have  been previously deleted by the user at the checkout. |   |
-| - [x]  | Shop      | /shop         | Products from the database are displayed.  It is possible to add them to the cart                                                                                               |   |
-| - [x]  | Cart      | /cart         | See your cart. Change the amount or remove products.                                                                                                                            |   |
-| - [x]  | Dashboard | /dashboard    | Salesman dashboard. Discount can be changed for all products.                                                                                                                   |   |
-| - []   | Checkout  | /checkout     |                                                                                                                                                                                 |   |
-| - []   | Details   | /details/{id} | Display details and reviews of a single product.        
+| <ul><li>[x] </li></ul>| Login     | /login        | After DB import, use alm@fixform.com:12345678 to log in.                                                                                                                        |   |
+| <ul><li>[x] </li></ul>| Register  | /register     | Registration by default creates a customer-level-user.  Manually change level in the DB to 1 to be able to set  discounts in the /dashboard.                                    |   |
+| <ul><li>[x] </li></ul>| Home      | /             | Number of items in the cart (top right) is dynamic according  to the DB. 'On Sale' section shows first products that have  been previously deleted by the user at the checkout. |   |
+| <ul><li>[x] </li></ul>| Shop      | /shop         | Products from the database are displayed.  It is possible to add them to the cart                                                                                               |   |
+| <ul><li>[x] </li></ul>| Cart      | /cart         | See your cart. Change the amount or remove products.                                                                                                                            |   |
+| <ul><li>[x] </li></ul>| Dashboard | /dashboard    | Salesman dashboard. Discount can be changed for all products.                                                                                                                   |   |
+| <ul><li>[] </li></ul>| Checkout  | /checkout     |                                                                                                                                                                                 |   |
+| <ul><li>[] </li></ul>| Details   | /details/{id} | Display details and reviews of a single product.        
