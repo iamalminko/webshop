@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\User;
 
 class DashboardController extends Controller
 {
@@ -23,7 +24,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {
+    {        
         $products = Product::all();
 
         return view('dashboard.index')->with('products', $products);
@@ -36,15 +37,14 @@ class DashboardController extends Controller
      */
     public function setDiscount(Request $request, $id)
     {
-        $user = User::where(auth::user->id , '=' , $userID )->get()[0];
+        $user = User::where('id', '=' , auth()->user()->id)->get()[0];
         if($user->level == 1)
         {
-            $products = Product::all();
-
             $product = Product::where('id' , '=' , $id )->get()[0];
             $product->discount = $request->input('discount');
             $product->save();
-            return 'SUCCESS';
+            //return 'SUCCESS';
+            return redirect('/dashboard');
         }
     
         return 'ERROR:ACCESS DENIED';

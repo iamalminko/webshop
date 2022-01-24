@@ -7,9 +7,13 @@ use App\Models\Product;
 use App\Models\ProductAdded;
 use App\Models\ProductDropped;
 use App\Models\User;
+use Auth;
 
 class FrontController extends Controller
 {
+    function __construct() {
+        $this->middleware('auth', array('except' => array('index', 'shop')));
+    }
     /**
      * Show the application dashboard.
      *
@@ -17,14 +21,38 @@ class FrontController extends Controller
      */
     public function index()
     {
-        return view('pages.home');
+        $productsOnSale = Product::where('discount' , '!=' , 0)->get();
+        $orderdProductsOnSale = [];
+        $cartCount = 0;
+
+        if(!Auth::guest())
+        {
+            $droppedProducts = ProductDropped::where('user_id' , '=' , auth()->user()->id)->get();
+            foreach ($droppedProducts as $product) {
+                array_push($orderdProductsOnSale, Product::where('id' , '=' , $product->product_id)->get()[0]);
+            }
+            $cartCount = count(ProductAdded::where('user_id' , '=' , auth()->user()->id)->get());
+        }
+        foreach ($productsOnSale as $product) {
+            if(!in_array($product, $orderdProductsOnSale)) array_push($orderdProductsOnSale, $product);
+        }
+
+        return view('pages.home')->with([
+            'productsOnSale' => $orderdProductsOnSale,
+            'cartCount' => $cartCount]);
     }
 
     public function shop()
     {
         $products = Product::all();
-
-        return view('pages.shop')->with('products', $products);
+        $cartCount = 0;
+        if(!Auth::guest())
+        {
+            $cartCount = count(ProductAdded::where('user_id' , '=' , auth()->user()->id)->get());
+        }
+        return view('pages.shop')->with([
+            'products' => $products,
+            'cartCount' => $cartCount]);
     }
 
     public function cart()
@@ -44,7 +72,15 @@ class FrontController extends Controller
                 "amount" => $product->amount,
             ]);
         }
-        return view('pages.cart')->with('products', $addedProducts_union);
+
+        $cartCount = 0;
+        if(!Auth::guest())
+        {
+            $cartCount = count(ProductAdded::where('user_id' , '=' , auth()->user()->id)->get());
+        }
+        return view('pages.cart')->with([
+            'products' => $addedProducts_union,
+            'cartCount' => $cartCount]);
     }
     
     public function addToCart($id)
@@ -60,7 +96,8 @@ class FrontController extends Controller
             $productAdded->product_id = $id;
             $productAdded->amount = 1;
             $productAdded->save();
-            return 'SUCCESS';
+            //return 'SUCCESS';
+            return redirect('/shop');
         }
         else if(count($existingRecords) == 1)
         {
@@ -83,10 +120,12 @@ class FrontController extends Controller
         }
         else if(count($existingRecords) == 1)
         {
-            $productAdded = $existingRecords[0];
-            $productAdded->amount = $amount;
+            $productAdded = $existingRecords[0];            
+            //$productAdded->amount = $amount;
+            if($productAdded->amount + $amount > 0) $productAdded->amount = $productAdded->amount + $amount;
             $productAdded->save();
-            return 'SUCCESS';
+            //return 'SUCCESS';
+            return redirect('/cart');
         }      
         else if(count($existingRecords) > 1)
         {
@@ -113,7 +152,8 @@ class FrontController extends Controller
             $droppedProduct->save();
             
             $existingRecords[0]->delete();
-            return 'SUCCESS';
+            //return 'SUCCESS';
+            return redirect('/cart');
         }      
         else if(count($existingRecords) > 1)
         {

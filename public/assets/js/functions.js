@@ -399,7 +399,7 @@
 		},
 
 		mercado_price_quantity: function(){
-			if($(".quantity-input").length > 0){
+			/*if($(".quantity-input").length > 0){
 				$(".quantity-input").on('click', '.btn', function(event) {
 					event.preventDefault();
 					var _this = $(this),
@@ -412,16 +412,16 @@
 						if (parseInt(_current_value, 10) < parseInt(_max_value, 10)) _input.val(parseInt(_current_value, 10) + 1);
 					}
 				});
-			}
+			}*/
 		},
 
 		mercado_remove_product_in_cart: function(){
-			if($(".products-cart .pr-cart-item").length > 0){
+			/*if($(".products-cart .pr-cart-item").length > 0){
 				$(document).on('click', '.pr-cart-item .delete .btn-delete', function(event) {
 					event.preventDefault();
 					$(this).closest('.pr-cart-item').remove();
 				});
-			}
+			}*/
 		},
 
         mercado_toggle_vertical_main_menu: function () {

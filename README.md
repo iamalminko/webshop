@@ -28,7 +28,7 @@ In the project folder, run the installation of packages:
 composer install
 ```
 
-Create a new databse, in your DB software, named: `FixForm-Alminko`
+Create a new databse, in your DB software (suggested name: `FixForm-Alminko`)
 
 Edit .env file (lines 12-16) according to your enviroment:
 ```bash
@@ -40,10 +40,8 @@ DB_USERNAME=root
 DB_PASSWORD=root
 ```
 
-Run the migrations for the DB:
-```bash
-php artisan migrate
-```
+Import the db file `RootDir\FixForm-Alminko.db` into your MySQL DB software (The file is an SQL type)
+After the import you should have the tables created and some records in the tables.
 
 Finally start the server:
 ```bash
@@ -51,3 +49,15 @@ php artisan serve
 ```
 and open the link in your browser, for example:
 `http://127.0.0.1:8001/`
+
+
+|       | Page      | Endpoint      | Info                                                                                                                                                                |   |
+|-------|-----------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|
+|  [x]  | Login     | /login        | After DB import, use alm@fixform.com:12345678 to log in                                                                                                             |   |
+|  [x]  | Register  | /register     | Registration by default creates a customer-level-user.  Manually change level in the DB to 1 to be able to set  discounts in the /dashboard                         |   |
+|  [x]  | Home      | /             | Number of items in top right is dynamic according to the DB.  'On Sale' section shows first products that have been  previously deleted by the user at the checkout |   |
+|  [x]  | Shop      | /shop         | Products from the database are displayed.  It is possible to add them to the cart                                                                                   |   |
+|  [x]  | Cart      | /cart         | See your cart. Change the amount or remove products                                                                                                                 |   |
+|  [x]  | Dashboard | /dashboard    | Salesman dashboard. Discount can be changed for all products                                                                                                        |   |
+|  []   | Checkout  | /checkout     |                                                                                                                                                                     |   |
+|  []   | Details   | /details/{id} | Display details and reviews of a single product   
