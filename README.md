@@ -59,5 +59,5 @@ and open the link in your browser, for example:
 | <ul><li>[x] </li></ul>| Shop      | /shop         | Products from the database are displayed.  It is possible to add them to the cart                                                                                               |   |
 | <ul><li>[x] </li></ul>| Cart      | /cart         | See your cart. Change the amount or remove products.                                                                                                                            |   |
 | <ul><li>[x] </li></ul>| Dashboard | /dashboard    | Salesman dashboard. Discount can be changed for all products.                                                                                                                   |   |
-| <ul><li>[] </li></ul>| Checkout  | /checkout     |                                                                                                                                                                                 |   |
-| <ul><li>[] </li></ul>| Details   | /details/{id} | Display details and reviews of a single product.        
+| <ul><li>[ ] </li></ul>| Checkout  | /checkout     |                                                                                                                                                                                 |   |
+| <ul><li>[ ] </li></ul>| Details   | /details/{id} | Display details and reviews of a single product.        
