@@ -30,14 +30,14 @@
                             <div class="quantity">
                                 <div class="quantity-input">
                                     <input type="text" name="product-quatity" value="{{$product['amount']}}" data-max="120" pattern="[0-9]*" >
-                                    <a class="btn btn-increase" href="#"></a>
-									<a class="btn btn-reduce" href="#"></a>
+                                    <a class="btn btn-increase" href="/changeAmount/{{$product['id']}}/1"></a>
+									<a class="btn btn-reduce" href="/changeAmount/{{$product['id']}}/-1"></a>
                                 </div>
                             </div>
                             <div class="price-field sub-total"><p class="price">€{{number_format(($product['price']*$product['amount']), 2)}}</p></div>
                             @php $subtotal += $product['price']*$product['amount'] @endphp
                             <div class="delete">
-                                <a href="#" class="btn btn-delete" title="">
+                                <a href="/removeFromCart/{{$product['id']}}" class="btn btn-delete" title="">
                                     <span>Delete from your cart</span>
                                     <i class="fa fa-times-circle" aria-hidden="true"></i>
                                 </a>
