@@ -9,4 +9,12 @@ class ProductAdded extends Model
 {
     use HasFactory;
     protected $table = 'added_products';
+
+    public function user() {
+        return $this->belongsTo('App\Models\User');
+    }
+
+    public function product() {
+        return $this->belongsTo('App\Models\Product');
+    }
 }

@@ -18,8 +18,6 @@ Route::get('/shop', 'App\Http\Controllers\FrontController@shop');
 Route::get('/cart', 'App\Http\Controllers\FrontController@cart');
 
 Route::post('/addToCart/{id}', 'App\Http\Controllers\FrontController@addToCart')->name('addToCart');
-Route::get('/changeAmount/{id}/{amount}', 'App\Http\Controllers\FrontController@changeAmount')->name('changeAmount');
-Route::get('/removeFromCart/{id}', 'App\Http\Controllers\FrontController@removeFromCart')->name('removeFromCart');
 
 Route::get('/dashboard', 'App\Http\Controllers\DashboardController@index');
 Route::post('/setDiscount/{id}', 'App\Http\Controllers\DashboardController@setDiscount')->name('setDiscount');

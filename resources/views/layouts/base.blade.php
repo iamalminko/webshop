@@ -4,6 +4,9 @@
 	<meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	@if (Auth::check()) 
+         <meta name="user_id" content="{{ Auth::user()->id }}" />
+ 	@endif 
 	<title>Home</title>	
     <link rel="shortcut icon" type="image/x-icon" href="assets/images/favicon.gif">
 	<link href="https://fonts.googleapis.com/css?family=Lato:300,400,400italic,700,700italic,900,900italic&amp;subset=latin,latin-ext" rel="stylesheet">
@@ -474,5 +477,6 @@
 	<script src="{{ asset("assets/js/jquery.countdown.min.js") }}"></script>
 	<script src="{{ asset("assets/js/jquery.sticky.js") }}"></script>
 	<script src="{{ asset("assets/js/functions.js") }}"></script>
+	<script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>

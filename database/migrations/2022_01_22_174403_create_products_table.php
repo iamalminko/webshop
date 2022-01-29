@@ -17,8 +17,8 @@ class CreateProductsTable extends Migration
             $table->id();
             $table->string('name');
             $table->string('image');
-            $table->float('price', 8, 2);
-            $table->float('discount', 8, 2)->default(0.0);
+            $table->integer('price');
+            $table->integer('discount')->default(0);
             $table->timestamps();
         });
     }

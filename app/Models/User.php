@@ -44,6 +44,10 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    public function users() {
+        return $this->hasMany('App\Models\ProductAdded');
+    }
+
     /**
      * the salesman user contain a role_id of 1
      * 

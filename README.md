@@ -10,45 +10,17 @@ You have 1 week to accomplish the assignment. You decide yourself how much time 
 
 ## Setup steps
 
-Firstly, clone the repo or pull changes if you have it cloned already:
-
-```bash
-git clone git@github.com:madewithlove/technical-assignment-full-stack-engineer-iamalminko.git
-```
-
-or
-
-```bash
-git pull
-```
-
-In the project folder, run the installation of packages:
-
-```bash
-composer install
-```
-
-Create a new databse, in your DB software (suggested name: `FixForm-Alminko`)
-
-Edit .env file (lines 12-16) according to your enviroment:
-```bash
-DB_CONNECTION=mysql
-DB_HOST=127.0.0.1
-DB_PORT=8889
-DB_DATABASE=FixForm-Alminko
-DB_USERNAME=root
-DB_PASSWORD=root
-```
-
-Import the db file `RootDir\FixForm-Alminko.db` into your MySQL DB software (The file is an SQL type)
-After the import you should have the tables created and some records in the tables.
-
-Finally start the server:
-```bash
-php artisan serve
-```
-and open the link in your browser, for example:
-`http://127.0.0.1:8001/`
+- Clone the repository with __git clone__
+- Copy __.env.example__ file to __.env__ and edit database credentials there
+- Create a new databse, in your DB software (suggested name: `FixForm-Alminko`)
+- Import the db file `RootDir\FixForm-Alminko.db` into your MySQL DB software (The file is an SQL type)
+- Run __composer install__
+- Run __php artisan key:generate__
+- Run __php artisan migrate__
+- Run __npm install__
+- Run __npm run dev__
+- Run __php artisan serve__
+- That's it: launch the main URL, ex. __http://127.0.0.1:8000/__
 
 
 |        | Page      | Endpoint      | Info                                                                                                                                                                            |   |

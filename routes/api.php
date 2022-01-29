@@ -14,6 +14,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:sanctum')->get('/user', function (Request $request)
+{
     return $request->user();
 });
+
+Route::get('cart/{id}', 'App\Http\Controllers\Api\CartController@cart');
+Route::get('products', 'App\Http\Controllers\Api\CartController@products');
+Route::get('addToCart/{user_id}/{id}', 'App\Http\Controllers\Api\CartController@addToCart');
+Route::get('removeFromCart/{id}', 'App\Http\Controllers\Api\CartController@removeFromCart');
+Route::get('changeAmount/{id}/{amount}', 'App\Http\Controllers\Api\CartController@changeAmount');
