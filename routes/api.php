@@ -24,3 +24,5 @@ Route::get('products', 'App\Http\Controllers\Api\CartController@products');
 Route::get('addToCart/{user_id}/{id}', 'App\Http\Controllers\Api\CartController@addToCart');
 Route::get('removeFromCart/{id}', 'App\Http\Controllers\Api\CartController@removeFromCart');
 Route::get('changeAmount/{id}/{amount}', 'App\Http\Controllers\Api\CartController@changeAmount');
+
+Route::get('setDiscount/{id}/{product_id}/{discount}', 'App\Http\Controllers\Api\CartController@setDiscount');

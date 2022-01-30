@@ -21,6 +21,7 @@ class FrontController extends Controller
      */
     public function index()
     {
+        // Find products on sale and display first one's that have been removed from cart before checkout by the user
         $productsOnSale = Product::where('discount' , '!=' , 0)->get();
         $orderdProductsOnSale = [];
         $cartCount = 0;
@@ -41,7 +42,11 @@ class FrontController extends Controller
             'productsOnSale' => $orderdProductsOnSale,
             'cartCount' => $cartCount]);
     }
-
+    /**
+     * Show the shop page - diplay all available products.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function shop()
     {
         $products = Product::all();
@@ -54,7 +59,11 @@ class FrontController extends Controller
             'products' => $products,
             'cartCount' => $cartCount]);
     }
-
+    /**
+     * Show the cart page - display products that user has put in cart.
+     *
+     * @return \Illuminate\Contracts\Support\Renderable
+     */
     public function cart()
     {
         $userID = auth()->user()->id;
@@ -81,31 +90,5 @@ class FrontController extends Controller
         return view('pages.cart')->with([
             'products' => $addedProducts_union,
             'cartCount' => $cartCount]);
-    }
-    
-    public function addToCart($id)
-    {
-        // Check if product already added by this user
-        $userID = auth()->user()->id;
-        $existingRecords = ProductAdded::where('user_id' , '=' , $userID )->where('product_id' , '=' , $id )->get();
-
-        if(count($existingRecords) == 0)
-        {
-            $productAdded = new ProductAdded();
-            $productAdded->user_id = $userID;
-            $productAdded->product_id = $id;
-            $productAdded->amount = 1;
-            $productAdded->save();
-            //return 'SUCCESS';
-            return redirect('/shop');
-        }
-        else if(count($existingRecords) == 1)
-        {
-            return 'ERROR:PRODUCT ALREADY ADDED';
-        }      
-        else if(count($existingRecords) > 1)
-        {
-            return 'ERROR:DATABASE DUPLICATE';
-        }
     }
 }

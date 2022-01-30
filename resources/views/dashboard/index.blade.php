@@ -54,37 +54,9 @@
 
                 </div><!--end wrap shop control-->
 
-                <div class="row">
-
-                    <ul class="product-list grid-products equal-container">
-                        @foreach ($products as $product)
-                            <li class="col-lg-4 col-md-6 col-sm-6 col-xs-6 ">
-                                <div class="product product-style-3 equal-elem ">
-                                    <div class="product-thumnail">
-                                        <a href="detail.html" title="T-Shirt Raw Hem Organic Boro Constrast Denim">
-                                            <figure><img src="assets/images/products/{{$product->image}}" alt="{{$product->name}}"></figure>
-                                        </a>
-                                    </div>
-                                    <div class="product-info">
-                                        <a href="#" class="product-name"><span>{{$product->name}}</span></a>
-                                        <div class="wrap-price"><span class="product-price">€{{number_format($product->price, 2)}}</span></div>
-                                        <div class="wrap-footer-item footer-item-second">
-                                            <div class="item-content">
-                                                <div class="wrap-newletter-footer">
-                                                    <form action="setDiscount/{{$product->id}}" method="POST" class="frm-newletter" id="frm-newletter">
-                                                        @csrf
-                                                        <input type="number" class="input-discount" name="discount" value="{{$product->discount}}" placeholder="Discount">
-                                                        <button class="btn-submit">Set Discount</button>
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-                                </div>
-                            </li>
-                        @endforeach
-                    </ul>
+                <!-- Salesman dashboard -->
+                <div id="app">
+                    <dashboard-component></dashboard-component>
                 </div>
 
                 <div class="wrap-pagination-info">

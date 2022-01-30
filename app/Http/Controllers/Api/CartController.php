@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
 use App\Models\Product;
 use App\Models\ProductAdded;
 use App\Models\ProductDropped;
@@ -13,9 +14,10 @@ use App\Http\Resources\ProductResource;
 class CartController extends Controller
 {
     /**
-     * Show the application dashboard.
+     * Return all products added to cart by the user $id.
+     * We are sending $id in the request because Auth is not yet implementd for Vue.js client.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return JSON
      */
     public function cart($id)
     {
@@ -23,15 +25,19 @@ class CartController extends Controller
         return $productsAdded;
     }
     /**
-     * Show the application dashboard.
+     * Return all products.
      *
-     * @return \Illuminate\Contracts\Support\Renderable
+     * @return JSON
      */
     public function products()
     {
         return ProductResource::collection(Product::all());
     }
-    
+    /**
+     * Add product($id) to user's ($userID) cart
+     *
+     * @return Status message
+     */    
     public function addToCart($userID, $id)
     {
         // Check if product already added by this user
@@ -55,7 +61,11 @@ class CartController extends Controller
             return 'ERROR:DATABASE DUPLICATE';
         }
     }
-    
+    /**
+     * Remove added product ($id) from product_added table in DB
+     *
+     * @return Status message
+     */       
     public function removeFromCart($id)
     {
         $existingRecords = ProductAdded::where('id' , '=' , $id )->get();
@@ -112,5 +122,24 @@ class CartController extends Controller
         {
             return 'ERROR:DATABASE DUPLICATE';
         }
+    }
+
+    /**
+     * Set the product discount (can be done only by salesman - user level 1).
+     *
+     * @return Status message
+     */
+    public function setDiscount($id, $product_id, $discount)
+    {
+        $user = User::where('id', '=' , $id)->get()[0];
+        if($user->level == 1)
+        {
+            $product = Product::where('id' , '=' , $product_id )->get()[0];
+            $product->discount = $discount;
+            $product->save();
+            return 'SUCCESS';
+        }
+    
+        return 'ERROR:ACCESS DENIED';
     }
 }

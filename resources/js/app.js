@@ -21,6 +21,7 @@ window.Vue = require('vue').default;
 
 Vue.component('cart-component', require('./components/CartComponent.vue').default);
 Vue.component('shop-component', require('./components/ShopComponent.vue').default);
+Vue.component('dashboard-component', require('./components/DashboardComponent.vue').default);
 
 Vue.prototype.$userId = document.querySelector("meta[name='user_id']").getAttribute('content');
 

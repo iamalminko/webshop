@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\ProductAdded;
 use App\Models\User;
 
 class DashboardController extends Controller
@@ -24,29 +25,13 @@ class DashboardController extends Controller
      * @return \Illuminate\Contracts\Support\Renderable
      */
     public function index()
-    {        
-        $products = Product::all();
-
-        return view('dashboard.index')->with('products', $products);
-    }
-
-    /**
-     * Show the application dashboard.
-     *
-     * @return \Illuminate\Contracts\Support\Renderable
-     */
-    public function setDiscount(Request $request, $id)
     {
-        $user = User::where('id', '=' , auth()->user()->id)->get()[0];
-        if($user->level == 1)
-        {
-            $product = Product::where('id' , '=' , $id )->get()[0];
-            $product->discount = $request->input('discount');
-            $product->save();
-            //return 'SUCCESS';
-            return redirect('/dashboard');
-        }
-    
-        return 'ERROR:ACCESS DENIED';
+        // Fetch all products and set the cartCount number - icon in the top right
+        $products = Product::all();
+        $cartCount = count(ProductAdded::where('user_id' , '=' , auth()->user()->id)->get());
+
+        return view('dashboard.index')->with([
+            'products' => $products,
+            'cartCount' => $cartCount]);
     }
 }
