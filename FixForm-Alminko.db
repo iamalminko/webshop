@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: localhost:8889
--- Generation Time: Jan 24, 2022 at 12:41 AM
+-- Generation Time: Jan 31, 2022 at 12:14 AM
 -- Server version: 5.7.32
 -- PHP Version: 7.4.12
 
@@ -34,8 +34,8 @@ CREATE TABLE `added_products` (
 --
 
 INSERT INTO `added_products` (`id`, `user_id`, `product_id`, `amount`, `created_at`, `updated_at`) VALUES
-(7, 1, 3, 2, '2022-01-23 21:05:49', '2022-01-23 22:36:10'),
-(12, 1, 4, 1, '2022-01-23 23:37:51', '2022-01-23 23:37:51');
+(48, 1, 3, 1, '2022-01-30 21:58:25', '2022-01-30 21:58:25'),
+(51, 1, 1, 1, '2022-01-30 21:58:29', '2022-01-30 21:58:29');
 
 -- --------------------------------------------------------
 
@@ -48,7 +48,7 @@ CREATE TABLE `dropped_products` (
   `user_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
   `amount` int(11) NOT NULL,
-  `price` double(8,2) NOT NULL,
+  `price` int(11) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -58,9 +58,7 @@ CREATE TABLE `dropped_products` (
 --
 
 INSERT INTO `dropped_products` (`id`, `user_id`, `product_id`, `amount`, `price`, `created_at`, `updated_at`) VALUES
-(7, 1, 4, 1, 189.90, '2022-01-23 22:39:52', '2022-01-23 22:39:52'),
-(8, 1, 1, 1, 699.00, '2022-01-23 23:38:39', '2022-01-23 23:38:39'),
-(9, 1, 2, 2, 485.00, '2022-01-23 23:40:12', '2022-01-23 23:40:12');
+(44, 1, 5, 1, 12000, '2022-01-30 21:58:04', '2022-01-30 21:58:04');
 
 -- --------------------------------------------------------
 
@@ -104,7 +102,109 @@ INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
 (38, '2019_12_14_000001_create_personal_access_tokens_table', 5),
 (39, '2022_01_22_174403_create_products_table', 5),
 (40, '2022_01_23_205420_create_added_products_table', 5),
-(41, '2022_01_23_205444_create_dropped_products_table', 5);
+(41, '2022_01_23_205444_create_dropped_products_table', 5),
+(42, '2016_06_01_000001_create_oauth_auth_codes_table', 6),
+(43, '2016_06_01_000002_create_oauth_access_tokens_table', 6),
+(44, '2016_06_01_000003_create_oauth_refresh_tokens_table', 6),
+(45, '2016_06_01_000004_create_oauth_clients_table', 6),
+(46, '2016_06_01_000005_create_oauth_personal_access_clients_table', 6);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_access_tokens`
+--
+
+CREATE TABLE `oauth_access_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_auth_codes`
+--
+
+CREATE TABLE `oauth_auth_codes` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_clients`
+--
+
+CREATE TABLE `oauth_clients` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `user_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `provider` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personal_access_client` tinyint(1) NOT NULL,
+  `password_client` tinyint(1) NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_clients`
+--
+
+INSERT INTO `oauth_clients` (`id`, `user_id`, `name`, `secret`, `provider`, `redirect`, `personal_access_client`, `password_client`, `revoked`, `created_at`, `updated_at`) VALUES
+(1, NULL, 'FixForm Personal Access Client', '5BvQn1Lo1LmdkrAjr6HBySsIHWCYiuNAQ6tqUAqd', NULL, 'http://localhost', 1, 0, 0, '2022-01-28 18:04:47', '2022-01-28 18:04:47'),
+(2, NULL, 'FixForm Password Grant Client', 'r9ARlaV9dRPwedr4NpqoI2Xh5APJYJjmaf7nLerG', 'users', 'http://localhost', 0, 1, 0, '2022-01-28 18:04:47', '2022-01-28 18:04:47'),
+(3, NULL, 'FixForm Personal Access Client', 'qYqILwoPjURCpcYe9PdeTV1K9J1B7JWJn7FhQbeI', NULL, 'http://localhost', 1, 0, 0, '2022-01-28 18:20:08', '2022-01-28 18:20:08'),
+(4, NULL, 'FixForm Password Grant Client', 'XB7Hh4heqKnvWX0tTpPYaOAI02jQXQlPxfxfJGFX', 'users', 'http://localhost', 0, 1, 0, '2022-01-28 18:20:08', '2022-01-28 18:20:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_personal_access_clients`
+--
+
+CREATE TABLE `oauth_personal_access_clients` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `client_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `oauth_personal_access_clients`
+--
+
+INSERT INTO `oauth_personal_access_clients` (`id`, `client_id`, `created_at`, `updated_at`) VALUES
+(1, 1, '2022-01-28 18:04:47', '2022-01-28 18:04:47'),
+(2, 3, '2022-01-28 18:20:08', '2022-01-28 18:20:08');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `oauth_refresh_tokens`
+--
+
+CREATE TABLE `oauth_refresh_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
@@ -146,8 +246,8 @@ CREATE TABLE `products` (
   `id` bigint(20) UNSIGNED NOT NULL,
   `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `image` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `price` double(8,2) NOT NULL,
-  `discount` double(8,2) NOT NULL DEFAULT '0.00',
+  `price` int(11) NOT NULL,
+  `discount` int(11) NOT NULL DEFAULT '0',
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -157,11 +257,11 @@ CREATE TABLE `products` (
 --
 
 INSERT INTO `products` (`id`, `name`, `image`, `price`, `discount`, `created_at`, `updated_at`) VALUES
-(1, 'Pioneer DJ Mixer', 'digital_01.jpg', 699.00, 20.00, NULL, '2022-01-23 21:26:35'),
-(2, 'Roland Wave Sampler', 'digital_02.jpg', 485.00, 20.00, NULL, '2022-01-23 22:20:04'),
-(3, 'Reloop Headphone', 'digital_03.jpg', 159.00, 25.00, NULL, '2022-01-23 22:20:55'),
-(4, 'Rokit Monitor', 'digital_04.jpg', 189.90, 5.00, NULL, NULL),
-(5, 'Fisherprice Baby Mixer', 'digital_05.jpg', 120.00, 0.00, NULL, NULL);
+(1, 'Pioneer DJ Mixer', 'digital_01.jpg', 69900, 3000, NULL, '2022-01-30 21:57:31'),
+(2, 'Roland Wave Sampler', 'digital_02.jpg', 48500, 0, NULL, '2022-01-30 22:00:55'),
+(3, 'Reloop Headphone', 'digital_03.jpg', 15900, 0, NULL, '2022-01-30 22:01:03'),
+(4, 'Rokit Monitor', 'digital_04.jpg', 19000, 0, NULL, NULL),
+(5, 'Fisherprice Baby Mixer', 'digital_05.jpg', 12000, 1500, NULL, '2022-01-30 22:01:08');
 
 -- --------------------------------------------------------
 
@@ -218,6 +318,40 @@ ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `oauth_access_tokens`
+--
+ALTER TABLE `oauth_access_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_access_tokens_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_auth_codes`
+--
+ALTER TABLE `oauth_auth_codes`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_auth_codes_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_clients`
+--
+ALTER TABLE `oauth_clients`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_clients_user_id_index` (`user_id`);
+
+--
+-- Indexes for table `oauth_personal_access_clients`
+--
+ALTER TABLE `oauth_personal_access_clients`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `oauth_refresh_tokens`
+--
+ALTER TABLE `oauth_refresh_tokens`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`);
+
+--
 -- Indexes for table `password_resets`
 --
 ALTER TABLE `password_resets`
@@ -252,13 +386,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `added_products`
 --
 ALTER TABLE `added_products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=52;
 
 --
 -- AUTO_INCREMENT for table `dropped_products`
 --
 ALTER TABLE `dropped_products`
-  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT for table `failed_jobs`
@@ -270,7 +404,19 @@ ALTER TABLE `failed_jobs`
 -- AUTO_INCREMENT for table `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=42;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
+
+--
+-- AUTO_INCREMENT for table `oauth_clients`
+--
+ALTER TABLE `oauth_clients`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `oauth_personal_access_clients`
+--
+ALTER TABLE `oauth_personal_access_clients`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `personal_access_tokens`

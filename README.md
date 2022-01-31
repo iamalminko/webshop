@@ -16,16 +16,17 @@ You have 1 week to accomplish the assignment. You decide yourself how much time 
 - Import the db file `RootDir\FixForm-Alminko.db` into your MySQL DB software (The file is an SQL type)
 - Run __composer install__
 - Run __php artisan key:generate__
-- Run __php artisan migrate__
+- (Skip if you imported the SQL DB file) Run __php artisan migrate__
 - Run __npm install__
 - Run __npm run dev__
 - Run __php artisan serve__
 - That's it: launch the main URL, ex. __http://127.0.0.1:8000/__
 
+## Implementation table
 
 |        | Page      | Endpoint      | Info                                                                                                                                                                            |   |
 |--------|-----------|---------------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---|
-| <ul><li>[x] </li></ul>| Login     | /login        | After DB import, use alm@fixform.com:12345678 to log in.                                                                                                                        |   |
+| <ul><li>[x] </li></ul>| Login     | /login        | If you imported DB, use alm@fixform.com:12345678 to log in.                                                                                                                        |   |
 | <ul><li>[x] </li></ul>| Register  | /register     | Registration by default creates a customer-level-user.  Manually change level in the DB to 1 to be able to set  discounts in the /dashboard.                                    |   |
 | <ul><li>[x] </li></ul>| Home      | /             | Number of items in the cart (top right) is dynamic according  to the DB. 'On Sale' section shows first products that have  been previously deleted by the user at the checkout. |   |
 | <ul><li>[x] </li></ul>| Shop      | /shop         | Products from the database are displayed.  It is possible to add them to the cart                                                                                               |   |
@@ -33,3 +34,10 @@ You have 1 week to accomplish the assignment. You decide yourself how much time 
 | <ul><li>[x] </li></ul>| Dashboard | /dashboard    | Salesman dashboard. Discount can be changed for all products.                                                                                                                   |   |
 | <ul><li>[ ] </li></ul>| Checkout  | /checkout     |                                                                                                                                                                                 |   |
 | <ul><li>[ ] </li></ul>| Details   | /details/{id} | Display details and reviews of a single product.        
+
+
+## Tests
+
+There is a couple of tests for FrontEnd:
+
+Run __php artisan test__
